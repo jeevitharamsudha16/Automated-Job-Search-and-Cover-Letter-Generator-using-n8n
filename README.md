@@ -8,21 +8,21 @@ The workflow helps save time, ensures consistency, and organizes applications ne
 
 ⚙️ Workflow Steps
 
-Trigger (Cron)
+- Trigger (Cron)
 
-Runs every day at 10:00 AM (IST) automatically.
+- Runs every day at 10:00 AM (IST) automatically.
 
-Google Jobs Search (SerpAPI)
+- Google Jobs Search (SerpAPI)
 
-Fetches fresh job postings based on query keywords and location.
+- Fetches fresh job postings based on query keywords and location.
 
-Output includes: title, company_name, location, description, job_url.
+- Output includes: title, company_name, location, description, job_url.
 
-AI Cover Letter Generation (Gemini 2.5 Flash)
+- AI Cover Letter Generation (Gemini 2.5 Flash)
 
-Sends job details + your skills to Gemini 2.5 Flash.
+- Sends job details + your skills to Gemini 2.5 Flash.
 
-Generates a tailored cover letter for each role.
+- Generates a tailored cover letter for each role.
 
 Prompt Example:
 
@@ -43,7 +43,7 @@ Link: {{ $json.job_url }}
 TASK: Write the cover letter to the hiring team (<=250 words).
 
 
-Google Sheets Logging
+# Google Sheets Logging
 
 Appends each job entry into Google Sheets.
 
@@ -63,7 +63,7 @@ Description
 
 Cover Letter
 
-🛠️ Tech Stack
+# 🛠️ Tech Stack
 
 n8n – Workflow automation
 
@@ -73,7 +73,7 @@ Gemini 2.5 Flash – AI model for cover letter generation
 
 Google Sheets – Data logging & storage
 
-📊 Benefits
+# 📊 Benefits
 
 ⏱ Time Saved – No manual searching or rewriting applications.
 
@@ -81,7 +81,7 @@ Google Sheets – Data logging & storage
 
 📊 Organization – All job opportunities stored in a single Google Sheet for review.
 
-🚀 How to Run
+# 🚀 How to Run
 
 Install & Setup n8n
 
@@ -111,9 +111,9 @@ Test manually.
 
 Enable the Cron node for daily automation.
 
-📌 Example Output (Google Sheets)
+# 📌 Example Output (Google Sheets)
 Date (IST)	Title	Company	Location	Job URL	Cover Letter
-17-Aug-2025 10:00	Data Analyst	Acme Corp	Bengaluru	https://...	(Generated AI Cover Letter)
+
 📢 Conclusion
 
 This project demonstrates how AI + automation can simplify real-world challenges like job search and applications. By combining n8n workflows, SerpAPI job data, Gemini intelligence, and Google Sheets logging, the entire process becomes faster, smarter, and more consistent.
