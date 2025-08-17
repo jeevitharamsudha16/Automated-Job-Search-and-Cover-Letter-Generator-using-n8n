@@ -1,0 +1,363 @@
+{
+  "name": "cover_letter",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10,
+              "triggerAtMinute": {}
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "995f5dbc-48a3-4a5c-b43d-15abf66ffd18",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "google_jobs",
+        "q": "Data Scientist",
+        "additionalFields": {
+          "location": "Bangalore"
+        },
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-serpapi.serpApi",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "75ebe873-09fc-4461-95dc-582db890d56f",
+      "name": "Google_jobs search",
+      "credentials": {
+        "serpApi": {
+          "id": "W6ZofscZ6GMvhNah",
+          "name": "SerpApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "jobs_results",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "0d984776-f896-4ceb-81a1-c8f2c38439b1",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=[\n  {\n    \"role\": \"system\",\n    \"content\": \"You are a professional cover letter writer with the ability to assess job match scores.\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"Generate a personalized cover letter for a fresher Data Scientist position at {{ $json.company_name }} in Bangalore based on the following details:\\n\\nJob Title: Data Scientist\\nCompany: {{ $json.company_name }}\\nLocation: {{ $json.location }}\\n\\nResume Details:\\n- Name: Jeevitha\\n- Address: Bangalore\\n- Email: jeevithads16@gmail.com\\n- Skills: Python, SQL, PowerBI, Machine Learning, Excel, Tableau, Deep Learning, NLP, MLOps\\n- Experience: {{ $json.experience }}\\n- Education: {{ $json.education }}\\n- Projects: Health Insurance Charges Prediction, Rice Variety Classification, Gemini Nutrition Assistant, Heart Attack Risk Classification\\n\\nThe candidate has a strong foundation in these skills and is eager to apply them in real-world data science challenges. The cover letter should reflect this and demonstrate enthusiasm for contributing to the company's success. Include the candidate's contact information at the top. Additionally, please assess the job match score based on the candidate's skills and the provided job description.\"\n  }\n]\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "200fe8ac-1af6-43b8-96bf-97642ab7d30a",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "44w6wqFEaJRxlUmD",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5a7482ce-fb03-40a2-87da-ccf8712c188f",
+              "name": "title",
+              "value": "={{ $('Split Out').item.json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "85c2f84b-4b6e-4c71-84c2-6e78dfe50fd7",
+              "name": "company_name",
+              "value": "={{ $('Split Out').item.json.company_name }}",
+              "type": "string"
+            },
+            {
+              "id": "234cd7be-a72e-4c2f-9400-fe8cc2b19f16",
+              "name": "location",
+              "value": "={{ $('Split Out').item.json.location }}",
+              "type": "string"
+            },
+            {
+              "id": "1e89a6dc-3a8e-4040-8c40-248f235c88d1",
+              "name": "posted_at",
+              "value": "={{ $('Split Out').item.json.detected_extensions.posted_at }}",
+              "type": "string"
+            },
+            {
+              "id": "c1734363-1ed6-484c-9243-c8536546bda6",
+              "name": "link",
+              "value": "={{ $('Split Out').item.json.apply_options[0].link }}",
+              "type": "string"
+            },
+            {
+              "id": "ae31e053-ba01-4540-8555-b59459b338bb",
+              "name": "description",
+              "value": "={{ $('Split Out').item.json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "2299be81-eb96-4594-a01e-2acc844aec61",
+              "name": "cover letter",
+              "value": "={{ $json.content.parts[0].text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        0
+      ],
+      "id": "6643b500-29ce-4f54-ace9-49e797347554",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1OQfJS-mzaapjybp1nXASMdegNLK--L156bqXH-FUS3I",
+          "mode": "list",
+          "cachedResultName": "Youtube Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OQfJS-mzaapjybp1nXASMdegNLK--L156bqXH-FUS3I/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1OQfJS-mzaapjybp1nXASMdegNLK--L156bqXH-FUS3I/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "title": "={{ $json.title }}",
+            "company": "={{ $json.company_name }}",
+            "location": "={{ $json.location }}",
+            "link": "={{ $json.apply_options[0].link }}"
+          },
+          "matchingColumns": [
+            "title"
+          ],
+          "schema": [
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "company_name",
+              "displayName": "company_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "apply_options",
+              "displayName": "apply_options",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "cover letter",
+              "displayName": "cover letter",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "posted_at",
+              "displayName": "posted_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "description",
+              "displayName": "description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1184,
+        0
+      ],
+      "id": "d243bf53-9288-4135-a4cc-9ef49e808981",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "ebauSAPx3qfGem2s",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google_jobs search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google_jobs search": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "01980aee-2cc4-443a-b3b5-b6760af278a6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0a47fcb53a6fd4bf057f4367ae026d6b5a4616128b93b9eac78917019d76dfbd"
+  },
+  "id": "ZZO2E07O7dy5fPrL",
+  "tags": []
+}
