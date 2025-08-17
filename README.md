@@ -1,12 +1,12 @@
-🚀 Automated Job Search and Cover Letter Generator using n8n
-📌 Overview
+# 🚀 Automated Job Search and Cover Letter Generator using n8n
+##📌 Overview
 
 This project automates the job search and application process using n8n and Gemini 2.5 Flash.
 It automatically fetches job listings from Google Jobs (via SerpAPI), generates personalized cover letters with Gemini, and appends all results into Google Sheets every day at 10 AM.
 
 The workflow helps save time, ensures consistency, and organizes applications neatly in one place.
 
-⚙️ Workflow Steps
+## ⚙️ Workflow Steps
 
 - Trigger (Cron)
 
@@ -24,7 +24,7 @@ The workflow helps save time, ensures consistency, and organizes applications ne
 
 - Generates a tailored cover letter for each role.
 
-Prompt Example:
+## Prompt Example:
 
 ROLE: You write concise, professional cover letters tailored to each job.
 STYLE: 180–250 words, clear, achievement-focused, Indian English.
@@ -43,7 +43,7 @@ Link: {{ $json.job_url }}
 TASK: Write the cover letter to the hiring team (<=250 words).
 
 
-# Google Sheets Logging
+## Google Sheets Logging
 
 Appends each job entry into Google Sheets.
 
@@ -63,7 +63,7 @@ Description
 
 Cover Letter
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 n8n – Workflow automation
 
@@ -73,7 +73,7 @@ Gemini 2.5 Flash – AI model for cover letter generation
 
 Google Sheets – Data logging & storage
 
-# 📊 Benefits
+## 📊 Benefits
 
 ⏱ Time Saved – No manual searching or rewriting applications.
 
@@ -81,39 +81,35 @@ Google Sheets – Data logging & storage
 
 📊 Organization – All job opportunities stored in a single Google Sheet for review.
 
-# 🚀 How to Run
+## 🚀 How to Run
 
-Install & Setup n8n
+- Install & Setup n8n
 
-Use n8n Cloud or self-host.
+- Use n8n Cloud or self-host.
 
-Create Credentials
+- Create Credentials
 
-Add Google Sheets API credentials.
+- Add Google Sheets API credentials.
 
-Add SerpAPI Key.
+- Add SerpAPI Key.
 
-Add Google AI (Gemini) API Key.
+- Add Google AI (Gemini) API Key.
 
-Import Workflow
+- Import Workflow
 
-Import the provided n8n JSON file.
+- Import the provided n8n JSON file.
 
-Configure Sheet
+- Configure Sheet
 
-Create a Google Sheet with the required columns.
+- Create a Google Sheet with the required columns.
 
-Update the workflow to point to your sheet.
+- Update the workflow to point to your sheet.
 
-Run / Deploy
+- Enable the Cron node for daily automation.
 
-Test manually.
-
-Enable the Cron node for daily automation.
-
-# 📌 Example Output (Google Sheets)
+## 📌 Example Output (Google Sheets)
 Date (IST)	Title	Company	Location	Job URL	Cover Letter
 
-📢 Conclusion
+## 📢 Conclusion
 
 This project demonstrates how AI + automation can simplify real-world challenges like job search and applications. By combining n8n workflows, SerpAPI job data, Gemini intelligence, and Google Sheets logging, the entire process becomes faster, smarter, and more consistent.
