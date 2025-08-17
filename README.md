@@ -4,7 +4,8 @@ This project automates the job search and application process using n8n and Gemi
 It automatically fetches job listings from Google Jobs (via SerpAPI), generates personalized cover letters with Gemini, and appends all results into Google Sheets every day at 10 AM.
 
 The workflow helps save time, ensures consistency, and organizes applications neatly in one place.
-[Snip20250817_1.png]
+![Workflow Screenshot](./Snip20250817_1.png)
+
 
 ## ⚙️ Workflow Steps
 
