@@ -1,5 +1,4 @@
 # 🚀 Automated Job Search and Cover Letter Generator using n8n
-##📌 Overview
 
 This project automates the job search and application process using n8n and Gemini 2.5 Flash.
 It automatically fetches job listings from Google Jobs (via SerpAPI), generates personalized cover letters with Gemini, and appends all results into Google Sheets every day at 10 AM.
